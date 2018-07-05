@@ -35,7 +35,6 @@ USER user
 
 RUN wget "${ASIO_SDK_SOURCE}" -P /home/user/ \
 &&  unzip /home/user/asiosdk2.3.zip -d /home/user/ \
-&&  ls -la /home/user/ \
 &&  rm /home/user/asiosdk2.3.zip
 
 CMD mumble_compile

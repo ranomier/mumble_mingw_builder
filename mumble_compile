@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e # abort on errors
+
 export MUMBLE_PROTOC="/usr/lib/mxe/usr/x86_64-unknown-linux-gnu/bin/protoc"
 export PATH="${PATH}:/usr/lib/mxe/usr/bin"
 
@@ -8,12 +10,12 @@ git clone --recurse-submodules --depth=1 "${MUMBLE_SOURCE}"
 cd -
 
 mkdir -p "/home/user/mumble/3rdparty/asio"
-mv -r "/home/user/ASIOSDK2.3" "/home/user/mumble/3rdparty/asio"
+mv -T "/home/user/ASIOSDK2.3" "/home/user/mumble/3rdparty/asio"
 
 cd "${HOME}/mumble"
 "${BIN_ARCH}-w64-mingw32.static-qmake-qt5" -recursive CONFIG+="release g15-emulator no-overlay no-bonjour no-elevation no-ice"
 make
 cd -
 
-
+# run given command
 ${*}
