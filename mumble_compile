@@ -8,7 +8,7 @@ git clone --recurse-submodules --depth=1 "${MUMBLE_SOURCE}"
 cd -
 
 mkdir -p "/home/user/mumble/3rdparty/asio"
-mv "/home/user/ASIOSDK2.3" "/home/user/mumble/3rdparty/asio"
+mv -r "/home/user/ASIOSDK2.3" "/home/user/mumble/3rdparty/asio"
 
 cd "${HOME}/mumble"
 "${BIN_ARCH}-w64-mingw32.static-qmake-qt5" -recursive CONFIG+="release g15-emulator no-overlay no-bonjour no-elevation no-ice"
