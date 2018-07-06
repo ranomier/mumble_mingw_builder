@@ -4,6 +4,7 @@ ENV ARCH="x86-64"
 ENV BIN_ARCH="x86_64"
 ENV MUMBLE_SOURCE="https://github.com/mumble-voip/mumble.git"
 ENV ASIO_SDK_SOURCE="http://www.steinberg.net/sdk_downloads/asiosdk2.3.zip"
+ENV HOME="/home/user"
 
 
 RUN touch /usr/local/bin/mumble_compile \
@@ -26,15 +27,17 @@ RUN touch /usr/local/bin/mumble_compile \
         unzip \
 &&  rm -rf /var/lib/apt/lists/* \
 &&  echo "###### adding user ######" \
-&&  useradd -U -m -d /home/user user
+&&  useradd -U -m -d "${HOME}" user
 
 COPY "./mumble_compile" "/usr/local/bin/mumble_compile.temp"
 RUN cat "/usr/local/bin/mumble_compile.temp" > "/usr/local/bin/mumble_compile"
 
 USER user
 
-RUN wget "${ASIO_SDK_SOURCE}" -P /home/user/ \
-&&  unzip /home/user/asiosdk2.3.zip -d /home/user/ \
-&&  rm /home/user/asiosdk2.3.zip
+VOLUME ['$HOME/result']
+
+RUN wget "${ASIO_SDK_SOURCE}" -P "${HOME}" \
+&&  unzip "${HOME}/asiosdk2.3.zip" -d "${HOME}" \
+&&  rm "${HOME}/asiosdk2.3.zip"
 
 CMD mumble_compile
